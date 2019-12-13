@@ -1,0 +1,97 @@
+<style type="text/css">
+    .progress{
+        position: absolute;
+        top:20%;
+        width: 2.5%;
+        height:450px;
+        opacity: 0.8; 
+        filter: alpha(opacity=80);
+    }
+    .progress-bar{
+        position:absolute;
+        top:0%; 
+        width: 100%;
+    }
+    
+    
+</style>
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Sorting Visualiser</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This tool is for noobs,who need a visual for understanding Sorting Algorithms . It visualises various sorting algorithms like QuickSort,MergeSort,SelectionSort and BubbleSort .</p>
+    <p>Correct way to use is 1. select sorting speed 2. then click on Set Speed & Generate New Array 3. then select a sorting algorithm 4. then click on sort now. </p>
+    <p><b>Warnings!!!</b></p>
+    <p>Do not change the sorting speed while sorting is cgoing on!!!</p>
+    <p>Do not change the sorting algorithm and/or use the sort now button while sorting is going on!!!</p>
+    <p>p.s. : MergeSort is not working as of now :)  :) cuz of some F******* bug</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<nav class="navbar navbar-expand-lg navbar-light static-top" style="background-color: #e3f2fd;">
+        <div class="container">
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <ng-template #tipContentforTut>Read a brief non-boring tutorial of what this tool does and how to use it......</ng-template>
+                  <button class="btn btn-outline-primary mb-2 mr-2" [ngbTooltip] ="tipContentforTut"(click)="openScrollableContent(longContent)">Read Tutorial</button>
+              </li>
+              
+              <li class="nav-item ">
+                    <form class="form-inline my-2 my-lg-0">
+
+                            <input class="form-control mr-sm-4" type="search" placeholder="Enter a number" aria-label="Search" [(ngModel)] = "speed" [ngModelOptions]="{standalone: true}">
+                            <ng-template #tipContent1>Enter a no between 1 and 10 ; a value < 5 increses the sorting speed, a value > 5 decreases the sorting speed .</ng-template>
+                            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" [ngbTooltip] ="tipContent1" (click)="setArray()">Set Speed & Generate New Array</button>
+                    </form>
+                  </li>
+              <li class="nav-item">
+                    <div class="col">
+                            <div ngbDropdown class="d-inline-block">
+                              <ng-template #tipContent3>Select a sorting algorithm</ng-template>
+                              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle [ngbTooltip]="tipContent3" >{{sortingAlgorithmType}}</button>
+                              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="f1()">Quick Sort</button>
+                                <button ngbDropdownItem (click)="f2()">Merge Sort</button>
+                                <button ngbDropdownItem (click)="f3()">Selection Sort</button>
+                                <button ngbDropdownItem (click)="f4()">Bubble Sort</button>
+
+                              </div>
+                            </div>
+                    </div>
+              </li>
+              
+              <li class="nav-item text-right">
+                    <ng-template #tipContent2>Click Here to apply: <b>{{sortingAlgorithmType}}</b>!</ng-template>
+                    <button type="button" class="btn btn-outline-secondary" [ngbTooltip]="tipContent2" (click)="applySortingAlgorithm()">
+                      Sort Now
+                    </button>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+</nav>
+
+<div class="container-fluid">
+        <div class="row ">
+            
+            <div class="col-sm-6 wider">
+                        <div *ngFor = "let a of array ; let i = index " >
+                        <div class="progress" [style.left.%] = "10 + i*2.7" [@openClose]="a.state ? 'open' :'closed'">
+                            <div class="progress-bar bg-primary" role="progressbar" [style.height.%]="a.val*5"  aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" >
+                            </div>
+                        </div> 
+                    </div>  
+              </div>
+              
+              
+            </div>
+</div>
